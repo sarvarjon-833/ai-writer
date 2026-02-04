@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom';
-import { Navbar } from '../dashboard/navbar';
-import { Sidebar } from '../dashboard/sidebar';
+import Sidebar from '../dashboard/sidebar';
+import Navbar from '../dashboard/navbar';
 
-export function Dashboard() {
+export default function Dashboard() {
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />

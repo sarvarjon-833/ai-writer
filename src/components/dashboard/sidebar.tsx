@@ -1,6 +1,6 @@
 import { Pencil } from 'lucide-react';
-import PromptHistory from './prompt-history';
 import type { TPromptHistory } from '@/shared/prompt-history.type';
+import PromptHistory from './prompt-history';
 
 const mockItems: TPromptHistory[] = [
   {
@@ -31,7 +31,7 @@ const mockItems: TPromptHistory[] = [
   },
 ];
 
-export function Sidebar() {
+export default function Sidebar() {
   return (
     <nav className="h-screen w-80 border-r p-4">
       <div className=" flex items-center justify-between">

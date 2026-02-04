@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Dashboard } from './components/dashboard/layout/dashboard-layout.tsx';
+import Dashboard from './components/layout/dashboard-layout';
 
 const router = createBrowserRouter([
   {

@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-export function Navbar() {
+export default function Navbar() {
   return (
     <div className="border-b">
       <nav className="flex items-center justify-between p-4 h-16">
