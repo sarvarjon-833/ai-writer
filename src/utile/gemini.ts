@@ -16,7 +16,6 @@ export const GenerateArticle = async (title: string, description: string) => {
     Remember the post should be based on the information that I have mentioned above. Output should be Markdown text format strictly.`,
   });
 
-  console.log(result.candidates);
   return result.text;
 };
 

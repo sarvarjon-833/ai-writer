@@ -5,6 +5,7 @@ import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
 import { Spinner } from '../ui/spinner';
 import GenerateArticle from '@/utile/gemini';
+import ContentViewer from './content-viewer';
 
 export default function ContentCreate() {
   const [isLoading, setIsloading] = useState(false);
@@ -20,43 +21,49 @@ export default function ContentCreate() {
     setForm({ ...form, [name]: value });
   };
 
+  const [content, setContent] = useState<null | string | undefined>(null);
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsloading(true);
     const result = await GenerateArticle(form.title, form.description);
-    console.log(result);
+    setContent(result);
     setIsloading(false);
   }
   return (
     <div>
       <h1 className="font-semibold text-3xl">Article Writer</h1>
-      <form className="mt-4" onSubmit={handleSubmit}>
-        <div className="grid w-full gap-1.5 mb-4">
-          <Label htmlFor="title">Title</Label>
-          <Input
-            type="text"
-            id="text"
-            placeholder="Title"
-            name="title"
-            onChange={handleChange}
-            disabled={isLoading}
-          />
-        </div>
-        <div className="grid w-full gap-1.5 mb-4">
-          <Label htmlFor="message"> Description</Label>
-          <Textarea
-            id="textarea-message"
-            name="description"
-            placeholder="Type your description here."
-            onChange={handleChange}
-            disabled={isLoading}
-          />
-        </div>
-        <Button disabled={isLoading} type="submit">
-          {isLoading && <Spinner data-icon="inline-start" />}
-          Generate
-        </Button>
-      </form>
+      {content ? (
+        <ContentViewer content={content} />
+      ) : (
+        <form className="mt-4" onSubmit={handleSubmit}>
+          <div className="grid w-full gap-1.5 mb-4">
+            <Label htmlFor="title">Title</Label>
+            <Input
+              type="text"
+              id="text"
+              placeholder="Title"
+              name="title"
+              onChange={handleChange}
+              disabled={isLoading}
+            />
+          </div>
+          <div className="grid w-full gap-1.5 mb-4">
+            <Label htmlFor="message"> Description</Label>
+            <Textarea
+              id="textarea-message"
+              name="description"
+              placeholder="Type your description here."
+              onChange={handleChange}
+              disabled={isLoading}
+            />
+          </div>
+          <Button disabled={isLoading} type="submit">
+            {isLoading && <Spinner data-icon="inline-start" />}
+            Generate
+          </Button>
+        </form>
+      )}
     </div>
   );
 }
