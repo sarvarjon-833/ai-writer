@@ -4,6 +4,7 @@ import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
 import { Spinner } from '../ui/spinner';
+import GenerateArticle from '@/utile/gemini';
 
 export default function ContentCreate() {
   const [isLoading, setIsloading] = useState(false);
@@ -19,10 +20,12 @@ export default function ContentCreate() {
     setForm({ ...form, [name]: value });
   };
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsloading(true);
-    console.log(form);
+    const result = await GenerateArticle(form.title, form.description);
+    console.log(result);
+    setIsloading(false);
   }
   return (
     <div>
