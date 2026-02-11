@@ -4,7 +4,7 @@ import Navbar from '../dashboard/navbar';
 
 export default function Dashboard() {
   return (
-    <div className="flex h-screen overflow-x-hidden">
+    <div className="flex h-screen ">
       <Sidebar />
       <div className="w-full">
         <Navbar />

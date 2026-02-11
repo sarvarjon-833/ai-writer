@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Dashboard from './components/layout/dashboard-layout';
 import DashboardHome from './pages/dashboard-home';
 import { AppContextProvider } from './context/app.provider';
+import { Toaster } from 'react-hot-toast';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <Toaster />
     <AppContextProvider>
       <RouterProvider router={router} />
     </AppContextProvider>

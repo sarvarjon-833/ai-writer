@@ -4,6 +4,7 @@ import { useAppContext } from '@/context/app.context';
 import type { ContentCreateRequestParams } from '@/shared/types/content-create-request-params';
 import GenerateArticle from '@/utile/gemini';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 export default function DashboardHome() {
   const { generatingContent, setGeneratingContent } = useAppContext();
@@ -12,9 +13,15 @@ export default function DashboardHome() {
   async function handleSubmit(params: ContentCreateRequestParams) {
     setGeneratingContent(true);
     const { title, description } = params;
-    const result = await GenerateArticle(title, description);
-    setContent(result);
-    setGeneratingContent(false);
+    try {
+      const result = await GenerateArticle(title, description);
+      setContent(result);
+    } catch (error) {
+      toast.error('error occured while generating article');
+      console.error('failed to generate article', error);
+    } finally {
+      setGeneratingContent(false);
+    }
   }
   return (
     <div>
