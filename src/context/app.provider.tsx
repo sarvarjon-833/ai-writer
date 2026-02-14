@@ -7,9 +7,21 @@ interface IProps {
 
 export const AppContextProvider: FC<IProps> = ({ children }: IProps) => {
   const [generatingContent, setGeneratingContent] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   return (
-    <AppContext.Provider value={{ generatingContent, setGeneratingContent }}>
+    <AppContext.Provider
+      value={{
+        generatingContent,
+        setGeneratingContent,
+        sidebarOpen,
+        toggleSidebar,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

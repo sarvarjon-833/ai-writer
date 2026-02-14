@@ -3,6 +3,8 @@ import { createContext, useContext } from 'react';
 interface IAppContext {
   generatingContent: boolean;
   setGeneratingContent: (value: boolean) => void;
+  sidebarOpen: boolean;
+  toggleSidebar: () => void;
 }
 
 export const AppContext = createContext<IAppContext | null>(null);

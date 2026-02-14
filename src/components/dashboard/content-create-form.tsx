@@ -43,7 +43,7 @@ export default function ContentCreateForm({
 
   return (
     <form
-      className="mt-4"
+      className="space-y-2 md:space-y-4 mt-2 md:mt-4"
       id="validated-form"
       onSubmit={form.handleSubmit(handleSubmit)}
     >
