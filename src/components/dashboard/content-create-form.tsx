@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Spinner } from '../ui/spinner';
-import type { ContentCreateRequestParams } from '@/shared/types/content-create-request-params';
+import type { TContentCreateRequestParams } from '@/shared/types/content-create-request-params';
 import { z } from 'zod';
 import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/field';
 import { Controller, useForm } from 'react-hook-form';
@@ -10,7 +10,7 @@ import { InputGroup, InputGroupTextarea } from '../ui/input-group';
 
 type ContentCreateFormProps = {
   isLoading: boolean;
-  onSubmit: (params: ContentCreateRequestParams) => void;
+  onSubmit: (params: TContentCreateRequestParams) => void;
 };
 
 const formSchema = z.object({
