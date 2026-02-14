@@ -3,6 +3,7 @@ import PromptHistory from './prompt-history';
 import { PencilSquareIcon } from '@heroicons/react/16/solid';
 import { useAppContext } from '@/context/app.context';
 import { Spinner } from '../ui/spinner';
+import { useContentContext } from '@/context/content.context';
 
 const mockItems: TPromptHistory[] = [
   {
@@ -34,7 +35,8 @@ const mockItems: TPromptHistory[] = [
 ];
 
 export default function Sidebar() {
-  const { generatingContent, sidebarOpen } = useAppContext();
+  const { sidebarOpen } = useAppContext();
+  const { generatingContent } = useContentContext();
   const classes = sidebarOpen ? 'w-1/2 border-r p-2' : 'w-0';
   return (
     <nav

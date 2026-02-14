@@ -6,7 +6,6 @@ interface IProps {
 }
 
 export const AppContextProvider: FC<IProps> = ({ children }: IProps) => {
-  const [generatingContent, setGeneratingContent] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -16,8 +15,6 @@ export const AppContextProvider: FC<IProps> = ({ children }: IProps) => {
   return (
     <AppContext.Provider
       value={{
-        generatingContent,
-        setGeneratingContent,
         sidebarOpen,
         toggleSidebar,
       }}

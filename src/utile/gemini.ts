@@ -63,10 +63,10 @@ export const GenerateArticle = async (title: string, description: string) => {
     Please create an article based on the following information. here is the list of information:
     \ntitle: ${title}
     \ndescription: ${description}
-    Remember the post should be based on the information that I have mentioned above. Output should be Markdown text format strictly.`,
+    Remember the post should be based on the information that I have mentioned above. Output should be Markdown text format strictly.Clean markdown without ''' formatting.`,
   });
 
-  return result.text;
+  return result.text ?? null;
 };
 
 export default GenerateArticle;
