@@ -1,4 +1,5 @@
 import type { TContentCreateRequestParams } from '@/shared/types/content-create-request-params';
+import type { TPromptHistory } from '@/shared/types/prompt-history.type';
 import { createContext, useContext } from 'react';
 
 interface IContentContext {
@@ -7,6 +8,7 @@ interface IContentContext {
   generateContent: (
     params: TContentCreateRequestParams
   ) => Promise<string | null>;
+  getPromptHistory: () => TPromptHistory[];
 }
 
 export const ContentContext = createContext<IContentContext | null>(null);
