@@ -1,4 +1,4 @@
-import type { TPromptHistory } from '@/shared/prompt-history.type';
+import type { TPromptHistory } from '@/shared/types/prompt-history.type';
 import { Link } from 'react-router-dom';
 
 type TPromptHistoryProps = {

@@ -1,42 +1,13 @@
-import type { TPromptHistory } from '@/shared/prompt-history.type';
 import PromptHistory from './prompt-history';
 import { PencilSquareIcon } from '@heroicons/react/16/solid';
 import { useAppContext } from '@/context/app.context';
 import { Spinner } from '../ui/spinner';
 import { useContentContext } from '@/context/content.context';
 
-const mockItems: TPromptHistory[] = [
-  {
-    date: 'Today',
-    links: [
-      {
-        title: 'Prompt 1',
-        url: '/dashboard/prompt/1',
-      },
-      {
-        title: 'Prompt 2',
-        url: '/dashboard/prompt/2',
-      },
-    ],
-  },
-  {
-    date: 'Yesterday',
-    links: [
-      {
-        title: 'Prompt 1',
-        url: '/dashboard/prompt/1',
-      },
-      {
-        title: 'Prompt 1',
-        url: '/dashboard/prompt/2',
-      },
-    ],
-  },
-];
-
 export default function Sidebar() {
   const { sidebarOpen } = useAppContext();
-  const { generatingContent } = useContentContext();
+  const { generatingContent, getPromptHistory } = useContentContext();
+  const historyItems = getPromptHistory();
   const classes = sidebarOpen ? 'w-1/2 border-r p-2' : 'w-0';
   return (
     <nav
@@ -52,7 +23,7 @@ export default function Sidebar() {
           </button>
         )}
       </div>
-      <PromptHistory items={mockItems} />
+      <PromptHistory items={historyItems} />
     </nav>
   );
 }
