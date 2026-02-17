@@ -3,6 +3,7 @@ import { PencilSquareIcon } from '@heroicons/react/16/solid';
 import { useAppContext } from '@/context/app.context';
 import { Spinner } from '../ui/spinner';
 import { useContentContext } from '@/context/content.context';
+import { Link } from 'react-router-dom';
 
 export default function Sidebar() {
   const { sidebarOpen } = useAppContext();
@@ -18,9 +19,9 @@ export default function Sidebar() {
         {generatingContent ? (
           <Spinner data-icon="inline-start" />
         ) : (
-          <button>
+          <Link to="/dashboard">
             <PencilSquareIcon className="w-4 md:w-6 h-4 md:h-6" />
-          </button>
+          </Link>
         )}
       </div>
       <PromptHistory items={historyItems} />
