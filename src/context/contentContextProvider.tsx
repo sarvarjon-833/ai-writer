@@ -23,20 +23,20 @@ const ContentContextProvider: FC<IProps> = ({ children }) => {
     []
   );
   const generateContent = async (params: TContentCreateRequestParams) => {
-    let content = null;
+    let generatedContent: TGeneratedContent | null = null;
     setGeneratingContent(true);
     const { title, description } = params;
     try {
-      content = await GenerateArticle(title, description);
+      const content = await GenerateArticle(title, description);
       if (content) {
-        const generatedContentItem: TGeneratedContent = {
+        generatedContent = {
           id: uuidv4(),
           title,
           description,
           content,
           date: new Date(),
         };
-        setContentItems([generatedContentItem, ...(contentItems || [])]);
+        setContentItems([generatedContent, ...(contentItems || [])]);
       }
     } catch (error) {
       toast.error('error occured while generating article');
@@ -44,7 +44,7 @@ const ContentContextProvider: FC<IProps> = ({ children }) => {
     } finally {
       setGeneratingContent(false);
     }
-    return content;
+    return generatedContent;
   };
 
   const getPromptHistory = (): TPromptHistory[] => {
@@ -74,6 +74,24 @@ const ContentContextProvider: FC<IProps> = ({ children }) => {
       }));
   };
 
+  const getContentById = (id: string) => {
+    const generatedContent = contentItems?.find((item) => item.id === id);
+    if (!generatedContent) {
+      throw new Error('content not found');
+    }
+    return generatedContent;
+  };
+
+  const updatedById = (id: string, generatedContent: TGeneratedContent) => {
+    const updatedContentItems = contentItems?.map((item) => {
+      if (item.id === id) {
+        return generatedContent;
+      }
+      return item;
+    });
+    setContentItems(updatedContentItems || []);
+  };
+
   return (
     <ContentContext.Provider
       value={{
@@ -81,6 +99,8 @@ const ContentContextProvider: FC<IProps> = ({ children }) => {
         generatingContent,
         setGeneratingContent,
         getPromptHistory,
+        getContentById,
+        updatedById,
       }}
     >
       {children}
