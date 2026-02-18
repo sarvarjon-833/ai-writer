@@ -60,6 +60,19 @@ export default function ContentViewer({
     setMode(Mode.View);
   };
 
+  const handleShare = async () => {
+    try {
+      const { origin } = window.location;
+      await navigator.clipboard.writeText(
+        `${origin}/share/${generatedContent.id}`
+      );
+      toast.success('share link successfully copied to clibboard');
+    } catch (error) {
+      console.error('failed to copy to clipboard', error);
+      toast.error('error occured while copying to clipboard');
+    }
+  };
+
   return mode === Mode.View ? (
     <Card className="mt-4">
       <CardContent className="p-4 md:p-6 lg:p-8">
@@ -81,7 +94,7 @@ export default function ContentViewer({
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="outline">
+              <Button variant="outline" onClick={handleShare}>
                 <ShareIcon className="h-4 w-4" />
               </Button>
             </TooltipTrigger>
