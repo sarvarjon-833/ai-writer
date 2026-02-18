@@ -7,6 +7,12 @@ import { PencilIcon } from 'lucide-react';
 import { useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import type { TGeneratedContent } from '@/shared/types/generated-content';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '../ui/tooltip';
 
 type ContentViewerProps = {
   generatedContent: TGeneratedContent;
@@ -62,18 +68,38 @@ export default function ContentViewer({
         </div>
       </CardContent>
       <CardFooter className="flex gap-2 justify-end">
-        <Button variant="outline" onClick={handleEdit}>
-          <PencilIcon className="h-4 w-4" />
-        </Button>
-        <Button variant="outline">
-          <ShareIcon className="h-4 w-4" />
-        </Button>
-        <Button variant="outline" onClick={handleCopy}>
-          <ClipboardIcon className="h-4 w-4" />
-        </Button>
-        <Button variant="outline">
-          <StarIcon className="h-4 w-4" />
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="outline" onClick={handleEdit}>
+                <PencilIcon className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Edit</p>
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="outline">
+                <ShareIcon className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Share</p>
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="outline" onClick={handleCopy}>
+                <ClipboardIcon className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Copy</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </CardFooter>
     </Card>
   ) : (
