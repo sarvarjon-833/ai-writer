@@ -50,7 +50,7 @@ export default function DashboardContent() {
                 key={index}
                 className={clsx(
                   'w-8 h-8 cursor-pointer',
-                  (generatedContent.rate || 0) > index && 'fill-amber-300'
+                  (generatedContent.rate || 0) > index && 'fill-amber-200'
                 )}
                 onClick={() => handleRateChange(index + 1)}
               />
