@@ -1,9 +1,11 @@
-import type { RegisteredUser } from '@/shared/types/registered-user';
+import type { TRegisteredUser } from '@/shared/types/registered-user';
 import { createContext, useContext } from 'react';
 
 interface IAuthContext {
   registerUser: (login: string, password: string) => void;
-  loginUser: (login: string, password: string) => RegisteredUser;
+  loginUser: (login: string, password: string) => TRegisteredUser;
+  user: TRegisteredUser | null;
+  logoutUser: () => void;
 }
 
 export const AuthContext = createContext<IAuthContext | null>(null);
