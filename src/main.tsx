@@ -1,7 +1,11 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from 'react-router-dom';
 import Dashboard from './components/layout/dashboard-layout';
 import DashboardHome from './pages/dashboard-home';
 import { AppContextProvider } from './context/app.provider';
@@ -13,6 +17,7 @@ import Share from './pages/share';
 import { AuthLayout } from './components/layout/auth-layout';
 import Register from './components/auth/register';
 import { AuthProvider } from './context/auth.context.provider';
+import Login from './components/auth/login';
 
 const router = createBrowserRouter([
   {
@@ -52,8 +57,16 @@ const router = createBrowserRouter([
     element: <AuthLayout />,
     children: [
       {
+        index: true,
+        element: <Navigate to="login" replace />,
+      },
+      {
         path: 'register',
         element: <Register />,
+      },
+      {
+        path: 'login',
+        element: <Login />,
       },
     ],
   },
