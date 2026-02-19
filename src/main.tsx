@@ -10,6 +10,9 @@ import { ContentContextProvider } from './context/contentContextProvider';
 import DashboardContent from './pages/dashboard-content';
 import ContentNotFound from './components/dashboard/content-error-notfound';
 import Share from './pages/share';
+import { AuthLayout } from './components/layout/auth-layout';
+import Register from './components/auth/register';
+import { AuthProvider } from './context/auth.context.provider';
 
 const router = createBrowserRouter([
   {
@@ -44,15 +47,27 @@ const router = createBrowserRouter([
     element: <Share />,
     errorElement: <ContentNotFound />,
   },
+  {
+    path: 'auth',
+    element: <AuthLayout />,
+    children: [
+      {
+        path: 'register',
+        element: <Register />,
+      },
+    ],
+  },
 ]);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Toaster />
     <AppContextProvider>
-      <ContentContextProvider>
-        <RouterProvider router={router} />
-      </ContentContextProvider>
+      <AuthProvider>
+        <ContentContextProvider>
+          <RouterProvider router={router} />
+        </ContentContextProvider>
+      </AuthProvider>
     </AppContextProvider>
   </StrictMode>
 );
