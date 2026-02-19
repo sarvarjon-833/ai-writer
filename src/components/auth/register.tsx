@@ -48,7 +48,7 @@ export default function Register() {
     const { login, password } = values;
     registerUser(login, password);
     toast.success('Account created');
-    navigate('/login');
+    navigate('/auth/login');
   };
   return (
     <Card className="max-w-md mx-auto w-full">
@@ -102,7 +102,9 @@ export default function Register() {
             />
           </FieldGroup>
           <CardFooter>
-            <Button className="w-full mt-3">Create an account</Button>
+            <Button type="submit" className="w-full mt-3">
+              Create an account
+            </Button>
           </CardFooter>
         </form>
       </CardContent>

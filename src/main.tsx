@@ -18,6 +18,7 @@ import { AuthLayout } from './components/layout/auth-layout';
 import Register from './components/auth/register';
 import { AuthProvider } from './context/auth.context.provider';
 import Login from './components/auth/login';
+import ProtectedRoute from './components/auth/protected-route';
 
 const router = createBrowserRouter([
   {
@@ -25,16 +26,12 @@ const router = createBrowserRouter([
     element: <h1 className="text-5xl">hello world</h1>,
   },
   {
-    path: 'login',
-    element: <h1 className="text-5xl">Login</h1>,
-  },
-  {
-    path: 'register',
-    element: <h1 className="text-5xl">Register</h1>,
-  },
-  {
     path: 'dashboard',
-    element: <Dashboard />,
+    element: (
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,

@@ -1,14 +1,18 @@
 import type { FC, ReactNode } from 'react';
 import { AuthContext } from './auth.context';
 import { useLocalStorage } from 'react-use';
-import type { RegisteredUser } from '@/shared/types/registered-user';
+import type { TRegisteredUser } from '@/shared/types/registered-user';
 
 interface IProps {
   children: ReactNode;
 }
 
 const AuthProvider: FC<IProps> = ({ children }) => {
-  const [users, setUsers] = useLocalStorage<RegisteredUser[]>('user', []);
+  const [users, setUsers] = useLocalStorage<TRegisteredUser[]>('user', []);
+  const [user = null, setUser] = useLocalStorage<TRegisteredUser | null>(
+    'currentUser',
+    null
+  );
   const registerUser = (login: string, password: string) => {
     if (users) {
       setUsers([...users, { login, password, createdAt: new Date() }]);
@@ -23,11 +27,16 @@ const AuthProvider: FC<IProps> = ({ children }) => {
     if (user.password !== password) {
       throw new Error('password does not match');
     }
+    setUser(user);
     return user;
   };
 
+  const logoutUser = () => {
+    setUser(null);
+  };
+
   return (
-    <AuthContext.Provider value={{ registerUser, loginUser }}>
+    <AuthContext.Provider value={{ registerUser, loginUser, user, logoutUser }}>
       {children}
     </AuthContext.Provider>
   );
