@@ -4,9 +4,16 @@ import { Input } from '../ui/input';
 import { Spinner } from '../ui/spinner';
 import type { TContentCreateRequestParams } from '@/shared/types/content-create-request-params';
 import { z } from 'zod';
-import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/field';
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from '../ui/field';
 import { Controller, useForm } from 'react-hook-form';
 import { InputGroup, InputGroupTextarea } from '../ui/input-group';
+import { useTranslation } from 'react-i18next';
 
 type ContentCreateFormProps = {
   isLoading: boolean;
@@ -28,6 +35,7 @@ export default function ContentCreateForm({
   isLoading,
   onSubmit,
 }: ContentCreateFormProps) {
+  const { t } = useTranslation('dashboard');
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -53,14 +61,15 @@ export default function ContentCreateForm({
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="title">Title</FieldLabel>
+              <FieldLabel htmlFor="title">{t('title')}</FieldLabel>
+
               <Input
                 {...field}
                 id="title"
                 aria-invalid={fieldState.invalid}
-                placeholder="Title"
-                autoComplete="off"
+                placeholder={t('title')}
               />
+              <FieldDescription>{t('titleHint')}</FieldDescription>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -73,17 +82,18 @@ export default function ContentCreateForm({
               className="grid w-full gap-1.5 mb-4"
               data-invalid={fieldState.invalid}
             >
-              <FieldLabel htmlFor="description">Description</FieldLabel>
+              <FieldLabel htmlFor="description">{t('description')}</FieldLabel>
               <InputGroup>
                 <InputGroupTextarea
                   {...field}
                   id="description"
-                  placeholder="Type your description here."
+                  placeholder={t('descriptionPlaceholder')}
                   rows={6}
                   className="min-h-24 resize-none"
                   aria-invalid={fieldState.invalid}
                 />
               </InputGroup>
+              <FieldDescription>{t('descriptionHint')}</FieldDescription>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -91,7 +101,7 @@ export default function ContentCreateForm({
       </FieldGroup>
       <Button disabled={isLoading} type="submit">
         {isLoading && <Spinner data-icon="inline-start" />}
-        Generate
+        {t('generate')}
       </Button>
     </form>
   );

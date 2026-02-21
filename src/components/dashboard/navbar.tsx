@@ -11,11 +11,47 @@ import {
 import { useAppContext } from '@/context/app.context';
 import { useAuthContext } from '@/context/auth.context';
 import { Bars3Icon } from '@heroicons/react/16/solid';
+import { useMemo, type ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
+enum LanguageCode {
+  English = 'en',
+  Uzbek = 'uz',
+}
+
+type TLanguage = {
+  label: string;
+  flag: ReactNode;
+};
+
+const Languages: { [code in LanguageCode]: TLanguage } = {
+  [LanguageCode.English]: {
+    label: 'English',
+    flag: (
+      <img src="https://flagcdn.com/gb.svg" width="20" alt="United Kingdom" />
+    ),
+  },
+  [LanguageCode.Uzbek]: {
+    label: 'Uzbek',
+    flag: <img src="https://flagcdn.com/uz.svg" width="20" alt="Uzbekistan" />,
+  },
+};
+
 export default function Navbar() {
+  const { i18n, t } = useTranslation('dashboard');
   const { toggleSidebar } = useAppContext();
   const { user, logoutUser } = useAuthContext();
+
+  const activeLanguage = useMemo(() => {
+    return Languages[i18n.language as LanguageCode];
+  }, [i18n.language]);
+
+  const changeLanguage = (lang: string) => {
+    if (lang !== i18n.language) {
+      i18n.changeLanguage(lang);
+    }
+  };
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -35,19 +71,46 @@ export default function Navbar() {
           </Button>
           <h4 className="font-semibold">Dashboard</h4>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">{user?.login}</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuGroup>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
-              <DropdownMenuSeparator />
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex gap-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="cursor-pointer">
+                {user?.login}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>{t('menuLabel')}</DropdownMenuLabel>
+                <DropdownMenuItem>{t('profile')}</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout}>
+                  {t('logout')}
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="cursor-pointer">
+                {activeLanguage.flag}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuGroup>
+                {Object.entries(Languages).map(([code, { label, flag }]) => (
+                  <DropdownMenuItem
+                    key={code}
+                    className="cursor-pointer"
+                    onClick={() => changeLanguage(code)}
+                  >
+                    {label}
+                    {flag}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </nav>
     </div>
   );
