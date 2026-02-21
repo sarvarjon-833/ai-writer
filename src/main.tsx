@@ -19,6 +19,7 @@ import Register from './components/auth/register';
 import { AuthProvider } from './context/auth.context.provider';
 import Login from './components/auth/login';
 import ProtectedRoute from './components/auth/protected-route';
+import './i18n';
 
 const router = createBrowserRouter([
   {
