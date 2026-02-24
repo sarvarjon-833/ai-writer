@@ -20,6 +20,8 @@ import { AuthProvider } from './context/auth.context.provider';
 import Login from './components/auth/login';
 import ProtectedRoute from './components/auth/protected-route';
 import './i18n';
+import * as Sentry from '@sentry/react';
+import './sentry';
 import Homepage from './pages/homePage';
 
 const router = createBrowserRouter([
@@ -73,13 +75,15 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Toaster />
-    <AppContextProvider>
-      <AuthProvider>
-        <ContentContextProvider>
-          <RouterProvider router={router} />
-        </ContentContextProvider>
-      </AuthProvider>
-    </AppContextProvider>
+    <Sentry.ErrorBoundary fallback={<p>xatolik yuz berdi</p>}>
+      <Toaster />
+      <AppContextProvider>
+        <AuthProvider>
+          <ContentContextProvider>
+            <RouterProvider router={router} />
+          </ContentContextProvider>
+        </AuthProvider>
+      </AppContextProvider>
+    </Sentry.ErrorBoundary>
   </StrictMode>
 );

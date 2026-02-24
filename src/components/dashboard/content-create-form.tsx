@@ -45,7 +45,6 @@ export default function ContentCreateForm({
   });
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
     onSubmit(values);
   };
 
