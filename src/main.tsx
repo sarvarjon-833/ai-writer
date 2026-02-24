@@ -20,11 +20,12 @@ import { AuthProvider } from './context/auth.context.provider';
 import Login from './components/auth/login';
 import ProtectedRoute from './components/auth/protected-route';
 import './i18n';
+import Homepage from './pages/homePage';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <h1 className="text-5xl">hello world</h1>,
+    element: <Homepage />,
   },
   {
     path: 'dashboard',
