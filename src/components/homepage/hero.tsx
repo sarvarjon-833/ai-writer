@@ -5,6 +5,7 @@ import { useAuthContext } from '@/context/auth.context';
 
 export default function Hero() {
   const { user } = useAuthContext();
+  console.log(user);
   return (
     <div className="bg-white">
       <header className="fixed inset-x-0 top-0 z-50 bg-white">
@@ -20,6 +21,7 @@ export default function Hero() {
           {user ? (
             <Link
               to="/dashboard"
+              data-testid="@hero/dashboard-link"
               className="text-sm font-semibold leading-6 text-gray-900 flex items-center gap-2"
             >
               Dashboard <ArrowRightIcon className="h-4 w-4" />
@@ -27,6 +29,7 @@ export default function Hero() {
           ) : (
             <Link
               to="/auth/login"
+              data-testid="@hero/register-link"
               className="text-sm font-semibold leading-6 text-gray-900 flex items-center gap-2"
             >
               Log in <ArrowRightIcon className="h-4 w-4" />

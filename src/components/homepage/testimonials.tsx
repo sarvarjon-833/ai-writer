@@ -16,6 +16,7 @@ export default function Testimonials() {
               className="mx-auto h-10 w-10 rounded-full"
               src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
               alt="User avatar"
+              data-testid="@testimonials/photos"
             />
 
             <div className="mt-4 flex items-center justify-center space-x-3 text-base">
