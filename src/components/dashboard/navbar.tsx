@@ -15,10 +15,7 @@ import { useMemo, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-enum LanguageCode {
-  English = 'en',
-  Uzbek = 'uz',
-}
+type LanguageCode = 'en' | 'uz';
 
 type TLanguage = {
   label: string;
@@ -26,13 +23,13 @@ type TLanguage = {
 };
 
 const Languages: { [code in LanguageCode]: TLanguage } = {
-  [LanguageCode.English]: {
+  ['en']: {
     label: 'English',
     flag: (
       <img src="https://flagcdn.com/gb.svg" width="20" alt="United Kingdom" />
     ),
   },
-  [LanguageCode.Uzbek]: {
+  ['uz']: {
     label: 'Uzbek',
     flag: <img src="https://flagcdn.com/uz.svg" width="20" alt="Uzbekistan" />,
   },

@@ -19,16 +19,13 @@ type ContentViewerProps = {
   onSave: (generatedContent: TGeneratedContent) => void;
 };
 
-enum Mode {
-  View,
-  Edit,
-}
+type Mode = 'view' | 'edit';
 
 export default function ContentViewer({
   generatedContent,
   onSave,
 }: ContentViewerProps) {
-  const [mode, setMode] = useState<Mode>(Mode.View);
+  const [mode, setMode] = useState<Mode>('view');
   const [editedContent, setEditedContent] = useState<string>(
     generatedContent.content
   );
@@ -43,7 +40,7 @@ export default function ContentViewer({
   };
 
   const handleEdit = () => {
-    setMode(Mode.Edit);
+    setMode('edit');
   };
 
   const handleContentChange = (value?: string) => {
@@ -51,13 +48,13 @@ export default function ContentViewer({
   };
 
   const handleCancel = () => {
-    setMode(Mode.View);
+    setMode('view');
     setEditedContent(generatedContent.content);
   };
 
   const handleSave = () => {
     onSave({ ...generatedContent, content: editedContent });
-    setMode(Mode.View);
+    setMode('view');
   };
 
   const handleShare = async () => {
@@ -73,7 +70,7 @@ export default function ContentViewer({
     }
   };
 
-  return mode === Mode.View ? (
+  return mode === 'view' ? (
     <Card className="mt-4">
       <CardContent className="p-4 md:p-6 lg:p-8">
         <div className="prose lg:prose-xl">
