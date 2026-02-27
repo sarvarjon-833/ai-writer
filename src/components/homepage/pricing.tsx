@@ -74,7 +74,7 @@ export default function Pricing() {
                   </span>
                 </p>
 
-                <Link to="/auth/register">
+                <Link to="/auth/payment">
                   <Button className="mt-6 w-full">Get access</Button>
                 </Link>
 
