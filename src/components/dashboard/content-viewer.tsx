@@ -1,4 +1,4 @@
-import { ClipboardIcon, ShareIcon, StarIcon } from '@heroicons/react/16/solid';
+import { ClipboardIcon, ShareIcon } from '@heroicons/react/16/solid';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardFooter } from '../ui/card';
 import Markdown from 'react-markdown';
