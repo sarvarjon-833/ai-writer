@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useContentContext } from '@/context/content.context';
+import type { TGeneratedContent } from '@/shared/types/generated-content';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import Markdown from 'react-markdown';
