@@ -67,7 +67,11 @@ export default function Register() {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel>Login</FieldLabel>
-                  <Input {...field} id="login-input" />
+                  <Input
+                    {...field}
+                    id="login-input"
+                    data-testid="@register/login"
+                  />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
@@ -80,7 +84,11 @@ export default function Register() {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel>Password</FieldLabel>
-                  <Input {...field} id="password-input" />
+                  <Input
+                    {...field}
+                    id="password-input"
+                    data-testid="@register/password"
+                  />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
