@@ -54,7 +54,7 @@ export default function Hero() {
                   <Button size="lg">Go to the dashboard</Button>
                 </Link>
               ) : (
-                <Link to="/auth/register">
+                <Link to="/auth/register" data-testid="@hero/get-started">
                   <Button size="lg">Get started</Button>
                 </Link>
               )}
