@@ -61,6 +61,12 @@ export const GenerateArticle = async (title: string, description: string) => {
     model: 'gemini-2.5-flash',
     contents: `
     Please create an article based on the following information. here is the list of information:
+    Detect the language of the user's input (title and description).
+    If the input is written in Uzbek, respond in Uzbek.
+    If the input is written in English, respond in English.
+    Do NOT change the language.
+    Do NOT translate unless necessary.
+    Keep the response fully in the same language as the user's input.
     \ntitle: ${title}
     \ndescription: ${description}
     Remember the post should be based on the information that I have mentioned above. Output should be Markdown text format strictly.Clean markdown without ''' formatting.`,
