@@ -14,7 +14,7 @@ import { Button } from '../ui/button';
 import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/field';
 import { useAuthContext } from '@/context/auth.context';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const formSchema = z.object({
   login: z
@@ -85,8 +85,14 @@ export default function Login() {
               )}
             />
           </FieldGroup>
-          <CardFooter>
+          <CardFooter className="flex flex-col gap-2">
             <Button className="w-full mt-3">Login</Button>
+            <Link
+              to="/auth/register"
+              className="tex-center block mt-2 text-blue-500"
+            >
+              Don't have an account? Register now!
+            </Link>
           </CardFooter>
         </form>
       </CardContent>
