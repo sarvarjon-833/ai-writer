@@ -5,9 +5,9 @@ export default function Testimonials() {
         <figure className="mt-10 text-center">
           <blockquote className="text-xl font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
             <p>
-              “Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo
-              expedita voluptas culpa sapiente alias molestiae. Numquam corrupti
-              in labore sed rerum et corporis.”
+              “"This AI assistant has completely transformed our content
+              strategy. What used to take days of drafting and editing now takes
+              minutes. It is an absolute game-changer for our team!"”
             </p>
           </blockquote>
 
@@ -20,7 +20,7 @@ export default function Testimonials() {
             />
 
             <div className="mt-4 flex items-center justify-center space-x-3 text-base">
-              <div className="font-semibold text-gray-900">Judith Black</div>
+              <div className="font-semibold text-gray-900">Sarah Jenkins</div>
 
               <svg
                 viewBox="0 0 2 2"
@@ -32,7 +32,7 @@ export default function Testimonials() {
                 <circle cx={1} cy={1} r={1} />
               </svg>
 
-              <div className="text-gray-600">CEO of Workcation</div>
+              <div className="text-gray-600">Content director at TechFlow</div>
             </div>
           </figcaption>
         </figure>
