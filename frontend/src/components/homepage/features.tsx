@@ -1,34 +1,33 @@
 import {
-  CloudArrowUpIcon,
-  LockClosedIcon,
-  ArrowPathIcon,
-  FingerPrintIcon,
+  SparklesIcon,
+  PaintBrushIcon,
+  ChartBarIcon,
+  GlobeAltIcon,
 } from '@heroicons/react/24/outline';
 
 const features = [
   {
-    name: 'Push to deploy',
-    description:
-      'Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massa nunc massa.',
-    icon: CloudArrowUpIcon,
+    name: 'AI Content Generation',
+    description: 'Instantly generate complete, unique blog posts and articles.',
+    icon: SparklesIcon,
   },
   {
-    name: 'SSL certificates',
+    name: 'Tone & Style Adaptation',
     description:
-      'Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget. Sem sodales gravida quam turpis enim lacus amet.',
-    icon: LockClosedIcon,
+      'Select from formal, professional, casual, or persuasive writing tones.',
+    icon: PaintBrushIcon,
   },
   {
-    name: 'Simple queues',
+    name: 'SEO Optimization Tools',
     description:
-      'Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.',
-    icon: ArrowPathIcon,
+      'Analyze and optimize content for search visibility and keyword usage.',
+    icon: ChartBarIcon,
   },
   {
-    name: 'Advanced security',
+    name: 'Multilingual Support',
     description:
-      'Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.',
-    icon: FingerPrintIcon,
+      'Generate and translate content in over 30 languages seamlessly.',
+    icon: GlobeAltIcon,
   },
 ];
 
@@ -38,15 +37,15 @@ export default function Features() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-base font-semibold leading-7 text-gray-700">
-            Deploy faster
+            Elevate your writing flow
           </h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Everything you need to deploy your app
+            Unleash your creative potential with AI
           </p>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Quis tellus eget adipiscing convallis sit sit eget aliquet quis.
-            Suspendisse eget egestas a elementum pulvinar et feugiat blandit at.
-            In mi viverra elit nunc.
+            Instantly generate high-quality blog posts, social media updates,
+            articles, and more with our advanced AI. Overcome writer's block and
+            save hours of brainstorming.
           </p>
         </div>
 
