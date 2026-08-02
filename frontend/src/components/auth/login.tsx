@@ -17,10 +17,10 @@ import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 
 const formSchema = z.object({
-  login: z
+  email: z
     .string()
     .min(10, { message: 'Login must be at least 10 characters' })
-    .max(20),
+    .max(40),
   password: z
     .string()
     .min(4, { message: 'Password must be at least 4 characters' }),
@@ -32,15 +32,15 @@ export default function Login() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      login: '',
+      email: '',
       password: '',
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    const { login, password } = values;
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    const { email, password } = values;
     try {
-      loginUser(login, password);
+      await loginUser(email, password);
       toast.success('Login successfull!');
       navigate('/dashboard');
     } catch (error) {
@@ -52,18 +52,18 @@ export default function Login() {
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl">Login to your account </CardTitle>
         <CardDescription>
-          Enter your login and password to login to your account
+          Enter your email and password to login to your account
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full">
           <FieldGroup>
             <Controller
-              name="login"
+              name="email"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Login</FieldLabel>
+                  <FieldLabel>Email</FieldLabel>
                   <Input {...field} id="login-input" />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />

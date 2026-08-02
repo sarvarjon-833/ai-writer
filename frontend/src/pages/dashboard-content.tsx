@@ -8,19 +8,26 @@ import { useParams } from 'react-router-dom';
 
 export default function DashboardContent() {
   const [generatedContent, setGeneratedContent] = useState<TGeneratedContent>();
-  const { getContentById, updatedById } = useContentContext();
+  const { getContentById, updatedById, loading } = useContentContext();
   const { id } = useParams<{ id: string }>();
-
   useEffect(() => {
-    if (id) {
+    if (!loading && id) {
       const result = getContentById(id);
       setGeneratedContent(result);
     }
-  }, [id, getContentById]);
+  }, [id, getContentById, loading]);
 
   const handleSave = (generatedContent: TGeneratedContent) => {
-    updatedById(generatedContent.id, generatedContent);
+    updatedById(generatedContent._id, generatedContent);
   };
+
+  if (loading) {
+    return (
+      <div>
+        <p>Malumot yuklanmoqda...</p>
+      </div>
+    );
+  }
 
   if (!generatedContent) {
     return (
@@ -59,7 +66,7 @@ export default function DashboardContent() {
       </div>
       <ContentViewer
         generatedContent={generatedContent}
-        key={generatedContent.id}
+        key={generatedContent._id}
         onSave={handleSave}
       />
     </div>

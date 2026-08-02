@@ -2,8 +2,14 @@ import type { TRegisteredUser } from '@/shared/types/registered-user';
 import { createContext, useContext } from 'react';
 
 interface IAuthContext {
-  registerUser: (login: string, password: string) => void;
-  loginUser: (login: string, password: string) => TRegisteredUser;
+  isAuthenticated: boolean;
+  registerUser: (
+    name: string,
+    email: string,
+    password: string,
+    passwordConfirm: string
+  ) => Promise<any>;
+  loginUser: (email: string, password: string) => Promise<any>;
   user: TRegisteredUser | null;
   logoutUser: () => void;
 }

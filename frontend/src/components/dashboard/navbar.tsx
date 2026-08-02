@@ -72,7 +72,7 @@ export default function Navbar() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="cursor-pointer">
-                {user?.login}
+                {user?.name}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>

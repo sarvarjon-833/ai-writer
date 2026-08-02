@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema(
   {
@@ -41,11 +42,49 @@ const userSchema = new mongoose.Schema(
         },
         message: "Passwords are not the same",
       },
-      select: false,
     },
+    passwordChangedAt: Date,
   },
   { timestamps: true },
 );
+
+// Extra middlewares
+userSchema.pre("save", async function () {
+  // Run only this function when the password was modified
+  if (!this.isModified("password")) return;
+
+  // Hash the password with the cost of 10
+  this.password = await bcrypt.hash(this.password, 10);
+
+  // Delete passwordConfirm field
+  this.passwordConfirm = undefined;
+});
+
+userSchema.pre("save", async function () {
+  // Run only this function when the password was modified
+  if (!this.isModified("password") || this.isNew) return;
+
+  this.passwordChangedAt = Date.now() - 1000;
+});
+
+// Functions
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword,
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10,
+    );
+    return JWTTimestamp < changedTimestamp;
+  }
+  return false;
+};
 
 const User = mongoose.model("User", userSchema);
 

@@ -13,6 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '../ui/tooltip';
+import { useContentContext } from '@/context/content.context';
 
 type ContentViewerProps = {
   generatedContent: TGeneratedContent;
@@ -25,13 +26,24 @@ export default function ContentViewer({
   generatedContent,
   onSave,
 }: ContentViewerProps) {
+  const { loading } = useContentContext();
+
   const [mode, setMode] = useState<Mode>('view');
   const [editedContent, setEditedContent] = useState<string>(
-    generatedContent.content
+    generatedContent?.aiResponse || ''
   );
+
+  if (loading) {
+    return <div>Yuklanmoqda...</div>;
+  }
+
+  if (!generatedContent) {
+    return <div>Content not found!</div>;
+  }
+
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(generatedContent.content);
+      await navigator.clipboard.writeText(generatedContent.aiResponse);
       toast.success('successfully copied to clibboard');
     } catch (error) {
       console.error('failed to copy to clipboard', error);
@@ -49,11 +61,11 @@ export default function ContentViewer({
 
   const handleCancel = () => {
     setMode('view');
-    setEditedContent(generatedContent.content);
+    setEditedContent(generatedContent.aiResponse);
   };
 
   const handleSave = () => {
-    onSave({ ...generatedContent, content: editedContent });
+    onSave({ ...generatedContent, aiResponse: editedContent });
     setMode('view');
   };
 
@@ -61,7 +73,7 @@ export default function ContentViewer({
     try {
       const { origin } = window.location;
       await navigator.clipboard.writeText(
-        `${origin}/share/${generatedContent.id}`
+        `${origin}/share/${generatedContent._id}`
       );
       toast.success('share link successfully copied to clibboard');
     } catch (error) {
@@ -74,7 +86,7 @@ export default function ContentViewer({
     <Card className="mt-4">
       <CardContent className="p-4 md:p-6 lg:p-8">
         <div className="prose lg:prose-xl">
-          <Markdown>{generatedContent.content}</Markdown>
+          <Markdown>{generatedContent.aiResponse}</Markdown>
         </div>
       </CardContent>
       <CardFooter className="flex gap-2 justify-end">

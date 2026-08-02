@@ -1,16 +1,15 @@
-import GenerateArticle from '@/utile/gemini';
-import { useState, type FC, type ReactNode } from 'react';
+import { useEffect, useState, type FC, type ReactNode } from 'react';
+import axios from 'axios';
 import toast from 'react-hot-toast';
 import { ContentContext } from './content.context';
 import type { TContentCreateRequestParams } from '@/shared/types/content-create-request-params';
 import type { TGeneratedContent } from '@/shared/types/generated-content';
-import { useLocalStorage } from 'react-use';
 import type {
+  IContentItem,
   TPromptHistory,
   TPromptLink,
 } from '@/shared/types/prompt-history.type';
 import dayjs from 'dayjs';
-import { v4 as uuidv4 } from 'uuid';
 
 interface IProps {
   children: ReactNode;
@@ -18,24 +17,49 @@ interface IProps {
 
 const ContentContextProvider: FC<IProps> = ({ children }) => {
   const [generatingContent, setGeneratingContent] = useState(false);
-  const [contentItems, setContentItems] = useLocalStorage<TGeneratedContent[]>(
-    'contentItems',
-    []
-  );
+  const [contentItems, setContentItems] = useState<IContentItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          setLoading(false);
+          return;
+        }
+
+        const response = await axios.get(
+          'http://localhost:5000/api/v1/prompt',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setContentItems(response.data.data.list);
+      } catch (err) {
+        console.log('Prompt tarixini olishda xatolik', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchItems();
+  }, []);
+
   const generateContent = async (params: TContentCreateRequestParams) => {
     let generatedContent: TGeneratedContent | null = null;
     setGeneratingContent(true);
     const { title, description } = params;
     try {
-      const content = await GenerateArticle(title, description);
-      if (content) {
-        generatedContent = {
-          id: uuidv4(),
-          title,
-          description,
-          content,
-          date: new Date(),
-        };
+      const token = localStorage.getItem('token');
+      const response = await axios.post(
+        'http://localhost:5000/api/v1/prompt/',
+        { title, description },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      generatedContent = response.data.data.prompt;
+      if (generatedContent) {
         setContentItems([generatedContent, ...(contentItems || [])]);
       }
     } catch (error) {
@@ -48,18 +72,18 @@ const ContentContextProvider: FC<IProps> = ({ children }) => {
   };
 
   const getPromptHistory = (): TPromptHistory[] => {
-    if (!contentItems) {
+    if (!contentItems || contentItems.length === 0) {
       return [];
     }
     const groupedItems = contentItems.reduce(
       (prev: { [key: string]: TPromptLink[] }, next) => {
-        const dataKey = dayjs(next.date).format('MMM DD, YYYY');
+        const dataKey = dayjs(next.createdAt).format('MMM DD, YYYY');
         if (!prev[dataKey]) {
           prev[dataKey] = [];
         }
         prev[dataKey].push({
           title: next.title,
-          url: `/dashboard/content/${next.id}`,
+          url: `/dashboard/content/${next._id}`,
         });
         return prev;
       },
@@ -74,17 +98,13 @@ const ContentContextProvider: FC<IProps> = ({ children }) => {
       }));
   };
 
-  const getContentById = (id: string) => {
-    const generatedContent = contentItems?.find((item) => item.id === id);
-    if (!generatedContent) {
-      throw new Error('content not found');
-    }
-    return generatedContent;
+  const getContentById = (id: string): IContentItem | undefined => {
+    return contentItems?.find((item) => item._id === id);
   };
 
   const updatedById = (id: string, generatedContent: TGeneratedContent) => {
     const updatedContentItems = contentItems?.map((item) => {
-      if (item.id === id) {
+      if (item._id === id) {
         return generatedContent;
       }
       return item;
@@ -101,6 +121,7 @@ const ContentContextProvider: FC<IProps> = ({ children }) => {
         getPromptHistory,
         getContentById,
         updatedById,
+        loading,
       }}
     >
       {children}

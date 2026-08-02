@@ -18,16 +18,14 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const formSchema = z
   .object({
-    login: z
-      .string()
-      .min(10, { message: 'Login must be at least 10 characters' })
-      .max(20),
+    name: z.string().min(2, { message: 'Name must be at least 2 characters' }),
+    email: z.string().email({ message: 'Please enter your email' }),
     password: z
       .string()
       .min(4, { message: 'Password must be at least 4 characters' }),
-    passwordRepeat: z.string().min(4),
+    passwordConfirm: z.string().min(4),
   })
-  .refine((data) => data.password === data.passwordRepeat, {
+  .refine((data) => data.password === data.passwordConfirm, {
     message: 'Password are not equal',
     path: ['passwordRepeat'],
   });
@@ -38,17 +36,22 @@ export default function Register() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      login: '',
+      email: '',
+      name: '',
       password: '',
-      passwordRepeat: '',
+      passwordConfirm: '',
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    const { login, password } = values;
-    registerUser(login, password);
-    toast.success('Account created');
-    navigate('/auth/login');
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    const { name, email, password, passwordConfirm } = values;
+    try {
+      await registerUser(name, email, password, passwordConfirm);
+      toast.success('Account created');
+      navigate('/auth/login');
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
   return (
     <Card className="max-w-md mx-auto w-full">
@@ -62,15 +65,32 @@ export default function Register() {
         <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full">
           <FieldGroup>
             <Controller
-              name="login"
+              name="name"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Login</FieldLabel>
+                  <FieldLabel>Name</FieldLabel>
                   <Input
                     {...field}
-                    id="login-input"
-                    data-testid="@register/login"
+                    id="name-input"
+                    data-testid="@register/name"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              name="email"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>Email</FieldLabel>
+                  <Input
+                    {...field}
+                    id="email-input"
+                    data-testid="@register/email"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -96,7 +116,7 @@ export default function Register() {
               )}
             />
             <Controller
-              name="passwordRepeat"
+              name="passwordConfirm"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
