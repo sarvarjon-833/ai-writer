@@ -21,15 +21,14 @@ const AuthProvider: FC<IProps> = ({ children }) => {
         return;
       }
 
+      const API_URL = import.meta.env.VITE_API_URL;
+
       try {
-        const response = await axios.get(
-          'http://localhost:5000/api/v1/users/me',
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${API_URL}/api/v1/users/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setUser(response.data.data.user);
         setIsAuthenticated(true);
       } catch (error: unknown) {
@@ -50,16 +49,14 @@ const AuthProvider: FC<IProps> = ({ children }) => {
     password: string,
     passwordConfirm: string
   ) => {
+    const API_URL = import.meta.env.VITE_API_URL;
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/v1/users/signup',
-        {
-          name,
-          email,
-          password,
-          passwordConfirm,
-        }
-      );
+      const response = await axios.post(`${API_URL}/api/v1/users/signup`, {
+        name,
+        email,
+        password,
+        passwordConfirm,
+      });
 
       return response.data;
     } catch (error: unknown) {
@@ -69,14 +66,13 @@ const AuthProvider: FC<IProps> = ({ children }) => {
   };
 
   const loginUser = async (email: string, password: string) => {
+    const API_URL = import.meta.env.VITE_API_URL;
+
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/v1/users/login',
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post(`${API_URL}/api/v1/users/login`, {
+        email,
+        password,
+      });
 
       localStorage.setItem('token', response.data.token);
       setUser(response.data.data.user);
