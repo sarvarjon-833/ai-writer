@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "https://ai-writer-acv43xpeu-sarvarjon-833s-projects.vercel.app/",
+    origin: "https://ai-writer-delta-topaz.vercel.app",
     credentials: true,
   }),
 );
