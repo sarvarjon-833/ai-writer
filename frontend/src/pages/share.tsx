@@ -31,7 +31,7 @@ export default function Share() {
           </h1>
           <p className="text-lg">
             <span className="font-semibold">Date: </span>
-            {dayjs(generatedContent.date).format('MMM DD, YYYY')}
+            {dayjs(generatedContent.createdAt).format('MMM DD, YYYY')}
           </p>
         </div>
         <p className="text-lg">
@@ -42,7 +42,7 @@ export default function Share() {
       <hr />
       <CardContent className="p-4 md:p-6 lg:p-8">
         <div className="prose lg:prose-xl max-w-none">
-          <Markdown>{generatedContent.content}</Markdown>
+          <Markdown>{generatedContent.aiResponse}</Markdown>
         </div>
       </CardContent>
     </Card>

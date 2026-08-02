@@ -5,7 +5,6 @@ import { useAuthContext } from '@/context/auth.context';
 
 export default function Hero() {
   const { user } = useAuthContext();
-  console.log(user);
   return (
     <div className="bg-white">
       <header className="fixed inset-x-0 top-0 z-50 bg-white">
