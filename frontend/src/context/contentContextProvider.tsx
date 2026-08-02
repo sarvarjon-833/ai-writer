@@ -54,7 +54,7 @@ const ContentContextProvider: FC<IProps> = ({ children }) => {
       const token = localStorage.getItem('token');
       const API_URL = import.meta.env.VITE_API_URL;
       const response = await axios.post(
-        `${API_URL}/api/v1/prompt/`,
+        `${API_URL}/api/v1/prompt`,
         { title, description },
         { headers: { Authorization: `Bearer ${token}` } }
       );
