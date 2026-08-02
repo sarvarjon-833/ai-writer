@@ -29,14 +29,13 @@ const ContentContextProvider: FC<IProps> = ({ children }) => {
           return;
         }
 
-        const response = await axios.get(
-          'http://localhost:5000/api/v1/prompt',
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const API_URL = import.meta.env.VITE_API_URL;
+
+        const response = await axios.get(`${API_URL}/api/v1/prompt`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setContentItems(response.data.data.list);
       } catch (err) {
         console.log('Prompt tarixini olishda xatolik', err);
@@ -53,8 +52,9 @@ const ContentContextProvider: FC<IProps> = ({ children }) => {
     const { title, description } = params;
     try {
       const token = localStorage.getItem('token');
+      const API_URL = import.meta.env.VITE_API_URL;
       const response = await axios.post(
-        'http://localhost:5000/api/v1/prompt/',
+        `${API_URL}/api/v1/prompt/`,
         { title, description },
         { headers: { Authorization: `Bearer ${token}` } }
       );
