@@ -9,7 +9,7 @@ export default function DashboardHome() {
   async function handleSubmit(params: TContentCreateRequestParams) {
     const result = await generateContent(params);
     if (result) {
-      navigate(`/dashboard/content/${result.id}`);
+      navigate(`/dashboard/content/${result._id}`);
     }
   }
   return (

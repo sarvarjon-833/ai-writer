@@ -10,8 +10,9 @@ interface IContentContext {
     params: TContentCreateRequestParams
   ) => Promise<TGeneratedContent | null>;
   getPromptHistory: () => TPromptHistory[];
-  getContentById: (id: string) => TGeneratedContent;
+  getContentById: (id: string) => TGeneratedContent | undefined;
   updatedById: (id: string, generatedContent: TGeneratedContent) => void;
+  loading: boolean;
 }
 
 export const ContentContext = createContext<IContentContext | null>(null);

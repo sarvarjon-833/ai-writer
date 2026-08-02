@@ -1,8 +1,9 @@
 export type TGeneratedContent = {
-  id: string;
-  content: string;
+  _id: string;
+  user: string;
+  aiResponse: string;
   title: string;
   description: string;
-  date: Date;
+  createdAt: string;
   rate?: number;
 };

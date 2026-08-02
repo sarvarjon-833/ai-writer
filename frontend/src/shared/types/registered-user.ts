@@ -1,5 +1,6 @@
 export type TRegisteredUser = {
-  login: string;
+  name: string;
+  email: string;
   password: string;
   createdAt: Date;
 };
