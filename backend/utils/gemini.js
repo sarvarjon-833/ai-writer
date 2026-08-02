@@ -18,7 +18,7 @@ const geminiAnswerFunction = async (title, description) => {
     strictly.Clean markdown without ''' formatting.`;
 
   const interaction = await ai.interactions.create({
-    model: "gemini-2.5-flash",
+    model: "gemini-1.5-flash",
     input: userInput,
   });
 
