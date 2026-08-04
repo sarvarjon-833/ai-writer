@@ -12,7 +12,10 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "https://ai-writer-delta-topaz.vercel.app",
+    origin: [
+      "https://ai-writer-delta-topaz.vercel.app",
+      "http://localhost:5173",
+    ],
     credentials: true,
   }),
 );

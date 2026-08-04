@@ -15,6 +15,7 @@ import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/field';
 import { useAuthContext } from '@/context/auth.context';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
+import PasswordInput from '../passwordInput/passwordInput';
 
 const formSchema = z
   .object({
@@ -49,8 +50,8 @@ export default function Register() {
       await registerUser(name, email, password, passwordConfirm);
       toast.success('Account created');
       navigate('/auth/login');
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error) {
+      if (error instanceof Error) toast.error(error.message);
     }
   };
   return (
@@ -104,11 +105,7 @@ export default function Register() {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel>Password</FieldLabel>
-                  <Input
-                    {...field}
-                    id="password-input"
-                    data-testid="@register/password"
-                  />
+                  <PasswordInput {...field} />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
@@ -121,7 +118,7 @@ export default function Register() {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel>Password repeat</FieldLabel>
-                  <Input {...field} id="password-repeat" />
+                  <PasswordInput {...field} id="password-repeat" />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}

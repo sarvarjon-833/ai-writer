@@ -15,6 +15,7 @@ import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/field';
 import { useAuthContext } from '@/context/auth.context';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
+import PasswordInput from '../passwordInput/passwordInput';
 
 const formSchema = z.object({
   email: z
@@ -77,7 +78,7 @@ export default function Login() {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel>Password</FieldLabel>
-                  <Input {...field} id="password-input" />
+                  <PasswordInput {...field} id="password-input" />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}

@@ -19,8 +19,12 @@ export default function Sidebar() {
         {generatingContent ? (
           <Spinner data-icon="inline-start" />
         ) : (
-          <Link to="/dashboard">
+          <Link
+            to="/dashboard"
+            className="flex items-center gap-2 px-2 rounded-md hover:bg-amber-400 transition-colors cursor-pointer text-gray-700"
+          >
             <PencilSquareIcon className="w-4 md:w-6 h-4 md:h-6" />
+            <span className="text-sm font-medium">New chat</span>
           </Link>
         )}
       </div>
