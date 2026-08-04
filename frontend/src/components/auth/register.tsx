@@ -15,7 +15,6 @@ import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/field';
 import { useAuthContext } from '@/context/auth.context';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import PasswordInput from '../passwordInput/passwordInput';
 
 const formSchema = z
