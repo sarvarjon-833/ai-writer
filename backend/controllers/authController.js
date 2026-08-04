@@ -46,7 +46,15 @@ exports.signup = async (req, res, next) => {
     // Create user and token by CreateSendToken(newUser, 201, req, res) function
     createSendToken(newUser, 201, res);
   } catch (err) {
-    console.log(err);
+    if (err.code === 11000) {
+      return next(
+        new AppError(
+          "This email has already existed! Please register with new email! ",
+        ),
+        400,
+      );
+      return next(err);
+    }
   }
 };
 

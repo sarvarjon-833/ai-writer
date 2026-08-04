@@ -60,8 +60,10 @@ const AuthProvider: FC<IProps> = ({ children }) => {
 
       return response.data;
     } catch (error: unknown) {
-      if (axios.isAxiosError(error))
-        console.log(error.response?.data?.message || error.message);
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || error.message;
+        throw new Error(errorMessage);
+      }
     }
   };
 
@@ -79,8 +81,10 @@ const AuthProvider: FC<IProps> = ({ children }) => {
       setIsAuthenticated(true);
       return response.data;
     } catch (error: unknown) {
-      if (axios.isAxiosError(error))
-        console.log(error.response?.data?.message || error.message);
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || error.message;
+        throw new Error(errorMessage);
+      }
     }
   };
 
